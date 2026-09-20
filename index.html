@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أعلام دول العالم | FATYAK</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+
+body {
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #fff;
+    scroll-behavior: smooth;
+}
+
+.header {
+    text-align: center;
+    padding: 30px 20px;
+    margin-bottom: 30px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.logo-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(102,126,234,0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.logo-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%); }
+    100% { transform: translateX(100%) translateY(100%); }
+}
+
+.logo-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 28px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 1;
+}
+
+.logo-text {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    background: linear-gradient(90deg, #fff, #ffd700, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    z-index: 1;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    margin: 15px 0;
+    background: linear-gradient(90deg, #fff, #87ceeb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header p { color: #b0c4de; font-size: 1.1em; }
+
+.developer {
+    margin-top: 15px;
+    font-size: 1em;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.controls {
+    max-width: 1400px;
+    margin: 0 auto 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 250px;
+    max-width: 500px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 15px 50px 15px 20px;
+    border: none;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-size: 16px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    outline: none;
+    transition: all 0.3s;
+}
+
+.search-input::placeholder { color: rgba(255,255,255,0.6); }
+.search-input:focus { background: rgba(255,255,255,0.15); border-color: #ffd700; }
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 0 auto 30px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 25px;
+    background: rgba(255,255,255,0.05);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    backdrop-filter: blur(10px);
+}
+
+.filter-btn:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+.filter-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-color: transparent; }
+.filter-btn.arab-btn.active { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+
+.stats {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffd700;
+    font-size: 1.1em;
+}
+
+.countries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.country-card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.country-card.arab {
+    border: 2px solid rgba(17,153,142,0.5);
+}
+
+.country-card.arab::before {
+    content: '🌙';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(17,153,142,0.9);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    z-index: 2;
+}
+
+.country-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border-color: #ffd700;
+}
+
+.flag-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: #1a2a3a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flag-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+}
+
+.country-card:hover .flag-img { transform: scale(1.1); }
+
+.country-info { padding: 20px; }
+
+.country-name {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #ffd700;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.1);
+    font-size: 0.95em;
+    gap: 10px;
+}
+
+.info-row:last-child { border-bottom: none; }
+.info-label { color: #87ceeb; font-weight: bold; white-space: nowrap; }
+.info-value { color: #fff; text-align: left; }
+
+.info-row.independence {
+    background: rgba(255,215,0,0.05);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+}
+
+.info-row.independence .info-value {
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.colonizer {
+    display: block;
+    font-size: 0.85em;
+    color: #ff9800;
+    margin-top: 3px;
+    font-style: italic;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    color: rgba(255,255,255,0.8);
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer strong { 
+    color: #ffd700;
+    font-size: 1.2em;
+}
+
+/* ===== زر الرجوع للأعلى ===== */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(102,126,234,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s ease;
+    z-index: 9999;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 12px 30px rgba(240,147,251,0.6);
+}
+
+.back-to-top:active {
+    transform: translateY(-2px) scale(1.05);
+}
+
+.back-to-top::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    opacity: 0.5;
+    animation: pulse 2s infinite;
+    z-index: -1;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+@media (max-width: 768px) {
+    .header h1 { font-size: 1.8em; }
+    .logo-text { font-size: 24px; }
+    .logo-icon { width: 45px; height: 45px; font-size: 20px; }
+    .back-to-top {
+        width: 48px;
+        height: 48px;
+        bottom: 20px;
+        left: 20px;
+        font-size: 20px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo-container">
+        <div class="logo-icon">F</div>
+        <div class="logo-text">FATYAK</div>
+    </div>
+    <h1>🌍 موسوعة أعلام دول العالم</h1>
+    <p>معلومات شاملة عن جميع دول العالم - أعلامها، استقلالها، سكانها ومساحاتها</p>
+    <div class="developer">⚡ تطوير: FATYAK ⚡</div>
+</div>
+
+<div class="controls">
+    <div class="search-box">
+        <input type="text" class="search-input" id="searchInput" placeholder="🔍 ابحث عن دولة...">
+    </div>
+</div>
+
+<div class="filter-buttons">
+    <button class="filter-btn active" data-filter="all">🌐 الكل</button>
+    <button class="filter-btn arab-btn" data-filter="arab">🌙 الدول العربية</button>
+    <button class="filter-btn" data-filter="آسيا">🌏 آسيا</button>
+    <button class="filter-btn" data-filter="أفريقيا">🌍 أفريقيا</button>
+    <button class="filter-btn" data-filter="أوروبا">🌍 أوروبا</button>
+    <button class="filter-btn" data-filter="أمريكا الشمالية">🌎 أمريكا الشمالية</button>
+    <button class="filter-btn" data-filter="أمريكا الجنوبية">🌎 أمريكا الجنوبية</button>
+    <button class="filter-btn" data-filter="أوقيانوسيا">🌊 أوقيانوسيا</button>
+</div>
+
+<div class="stats" id="stats"></div>
+<div class="countries-grid" id="countriesGrid"></div>
+
+<div class="footer">
+    <p>تم التطوير بواسطة <strong>FATYAK</strong> ⚡</p>
+</div>
+
+<!-- زر الرجوع للأعلى -->
+<button class="back-to-top" id="backToTop" title="الرجوع إلى الأعلى">⬆</button>
+
+<script>
+// ===== زر الرجوع للأعلى =====
+const backToTopBtn = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 400) {
+        backToTopBtn.classList.add('show');
+    } else {
+        backToTopBtn.classList.remove('show');
+    }
+});
+
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// ===== بيانات الدول =====
+const countriesData = [
+    // ===== الدول العربية =====
+    {n:"المملكة العربية السعودية",c:"sa",pop:"36,408,726",area:"2,149,690",lang:"العربية",cont:"آسيا",cap:"الرياض",f:"1932",col:"دولة مؤسسة (لم تُستعمر)",arab:true},
+    {n:"الإمارات العربية المتحدة",c:"ae",pop:"9,441,129",area:"83,600",lang:"العربية",cont:"آسيا",cap:"أبوظبي",f:"1971",col:"المملكة المتحدة",arab:true},
+    {n:"دولة الكويت",c:"kw",pop:"4,268,873",area:"17,818",lang:"العربية",cont:"آسيا",cap:"الكويت",f:"1961",col:"المملكة المتحدة",arab:true},
+    {n:"دولة قطر",c:"qa",pop:"2,688,235",area:"11,586",lang:"العربية",cont:"آسيا",cap:"الدوحة",f:"1971",col:"المملكة المتحدة",arab:true},
+    {n:"مملكة البحرين",c:"bh",pop:"1,463,265",area:"760",lang:"العربية",cont:"آسيا",cap:"المنامة",f:"1971",col:"المملكة المتحدة",arab:true},
+    {n:"سلطنة عُمان",c:"om",pop:"4,576,298",area:"309,500",lang:"العربية",cont:"آسيا",cap:"مسقط",f:"1650",col:"طرد البرتغال",arab:true},
+    {n:"الجمهورية اليمنية",c:"ye",pop:"33,699,956",area:"527,968",lang:"العربية",cont:"آسيا",cap:"صنعاء",f:"1918 / 1967",col:"الدولة العثمانية / المملكة المتحدة",arab:true},
+    {n:"جمهورية العراق",c:"iq",pop:"40,222,541",area:"438,317",lang:"العربية، الكردية",cont:"آسيا",cap:"بغداد",f:"1932",col:"المملكة المتحدة",arab:true},
+    {n:"الجمهورية العربية السورية",c:"sy",pop:"21,324,361",area:"185,180",lang:"العربية",cont:"آسيا",cap:"دمشق",f:"1946",col:"فرنسا",arab:true},
+    {n:"الجمهورية اللبنانية",c:"lb",pop:"5,489,739",area:"10,400",lang:"العربية",cont:"آسيا",cap:"بيروت",f:"1943",col:"فرنسا",arab:true},
+    {n:"المملكة الأردنية الهاشمية",c:"jo",pop:"10,267,584",area:"89,342",lang:"العربية",cont:"آسيا",cap:"عمّان",f:"1946",col:"المملكة المتحدة",arab:true},
+    {n:"دولة فلسطين",c:"ps",pop:"5,250,072",area:"6,020",lang:"العربية",cont:"آسيا",cap:"القدس",f:"1988",col:"الانتداب البريطاني / الاحتلال الإسرائيلي",arab:true},
+    {n:"جمهورية مصر العربية",c:"eg",pop:"109,262,178",area:"1,002,450",lang:"العربية",cont:"أفريقيا",cap:"القاهرة",f:"1922 / 1956",col:"المملكة المتحدة (الجلاء الكامل 1956)",arab:true},
+    {n:"المملكة المغربية",c:"ma",pop:"37,076,584",area:"446,550",lang:"العربية، الأمازيغية",cont:"أفريقيا",cap:"الرباط",f:"1956",col:"فرنسا وإسبانيا",arab:true},
+    {n:"الجمهورية الجزائرية الديمقراطية الشعبية",c:"dz",pop:"44,616,247",area:"2,381,741",lang:"العربية، الأمازيغية",cont:"أفريقيا",cap:"الجزائر",f:"1962",col:"فرنسا",arab:true},
+    {n:"الجمهورية التونسية",c:"tn",pop:"11,818,619",area:"163,610",lang:"العربية",cont:"أفريقيا",cap:"تونس",f:"1956",col:"فرنسا",arab:true},
+    {n:"دولة ليبيا",c:"ly",pop:"6,871,287",area:"1,759,540",lang:"العربية",cont:"أفريقيا",cap:"طرابلس",f:"1951",col:"إيطاليا",arab:true},
+    {n:"جمهورية السودان",c:"sd",pop:"45,656,960",area:"1,861,484",lang:"العربية، الإنجليزية",cont:"أفريقيا",cap:"الخرطوم",f:"1956",col:"المملكة المتحدة ومصر",arab:true},
+    {n:"جمهورية الصومال",c:"so",pop:"17,065,581",area:"637,657",lang:"الصومالية، العربية",cont:"أفريقيا",cap:"مقديشو",f:"1960",col:"المملكة المتحدة وإيطاليا",arab:true},
+    {n:"جمهورية موريتانيا الإسلامية",c:"mr",pop:"4,736,139",area:"1,030,700",lang:"العربية",cont:"أفريقيا",cap:"نواكشوط",f:"1960",col:"فرنسا",arab:true},
+    {n:"جمهورية جيبوتي",c:"dj",pop:"1,105,557",area:"23,200",lang:"العربية، الفرنسية",cont:"أفريقيا",cap:"جيبوتي",f:"1977",col:"فرنسا",arab:true},
+    {n:"اتحاد جزر القمر",c:"km",pop:"821,625",area:"2,235",lang:"القمرية، العربية، الفرنسية",cont:"أفريقيا",cap:"موروني",f:"1975",col:"فرنسا",arab:true},
+
+    // ===== آسيا (غير عربية) =====
+    {n:"الصين",c:"cn",pop:"1,425,671,352",area:"9,596,961",lang:"الصينية",cont:"آسيا",cap:"بكين",f:"1949",col:"دولة مؤسسة"},
+    {n:"اليابان",c:"jp",pop:"123,294,513",area:"377,975",lang:"اليابانية",cont:"آسيا",cap:"طوكيو",f:"660 ق.م",col:"دولة مؤسسة"},
+    {n:"كوريا الجنوبية",c:"kr",pop:"51,784,059",area:"100,210",lang:"الكورية",cont:"آسيا",cap:"سيول",f:"1945",col:"اليابان"},
+    {n:"كوريا الشمالية",c:"kp",pop:"26,069,418",area:"120,538",lang:"الكورية",cont:"آسيا",cap:"بيونغ يانغ",f:"1945",col:"اليابان"},
+    {n:"الهند",c:"in",pop:"1,428,627,663",area:"3,287,263",lang:"الهندية، الإنجليزية",cont:"آسيا",cap:"نيودلهي",f:"1947",col:"المملكة المتحدة"},
+    {n:"باكستان",c:"pk",pop:"240,485,658",area:"881,913",lang:"الأردية، الإنجليزية",cont:"آسيا",cap:"إسلام آباد",f:"1947",col:"المملكة المتحدة"},
+    {n:"بنغلاديش",c:"bd",pop:"172,954,319",area:"147,570",lang:"البنغالية",cont:"آسيا",cap:"دكا",f:"1971",col:"باكستان"},
+    {n:"إندونيسيا",c:"id",pop:"277,534,122",area:"1,904,569",lang:"الإندونيسية",cont:"آسيا",cap:"جاكرتا",f:"1945",col:"هولندا"},
+    {n:"ماليزيا",c:"my",pop:"33,938,221",area:"329,847",lang:"الماليزية",cont:"آسيا",cap:"كوالالمبور",f:"1957",col:"المملكة المتحدة"},
+    {n:"سنغافورة",c:"sg",pop:"5,917,648",area:"710",lang:"الإنجليزية، الماليزية، الصينية، التاميلية",cont:"آسيا",cap:"سنغافورة",f:"1965",col:"المملكة المتحدة"},
+    {n:"تايلاند",c:"th",pop:"71,801,279",area:"513,120",lang:"التايلاندية",cont:"آسيا",cap:"بانكوك",f:"1238",col:"دولة مؤسسة (لم تُستعمر)"},
+    {n:"فيتنام",c:"vn",pop:"98,186,856",area:"331,212",lang:"الفيتنامية",cont:"آسيا",cap:"هانوي",f:"1945 / 1954",col:"فرنسا"},
+    {n:"الفلبين",c:"ph",pop:"115,559,009",area:"300,000",lang:"الفلبينية، الإنجليزية",cont:"آسيا",cap:"مانيلا",f:"1946",col:"الولايات المتحدة"},
+    {n:"ميانمار",c:"mm",pop:"54,179,306",area:"676,578",lang:"البورمية",cont:"آسيا",cap:"نايبيداو",f:"1948",col:"المملكة المتحدة"},
+    {n:"كمبوديا",c:"kh",pop:"16,718,971",area:"181,035",lang:"الخميرية",cont:"آسيا",cap:"بنوم بنه",f:"1953",col:"فرنسا"},
+    {n:"لاوس",c:"la",pop:"7,529,475",area:"236,800",lang:"اللاوسية",cont:"آسيا",cap:"فيينتيان",f:"1953",col:"فرنسا"},
+    {n:"منغوليا",c:"mn",pop:"3,347,782",area:"1,564,116",lang:"المنغولية",cont:"آسيا",cap:"أولان باتور",f:"1921",col:"الصين"},
+    {n:"أفغانستان",c:"af",pop:"41,128,771",area:"652,230",lang:"الباشتو، الدارية",cont:"آسيا",cap:"كابول",f:"1919",col:"المملكة المتحدة"},
+    {n:"نيبال",c:"np",pop:"30,896,590",area:"147,181",lang:"النيبالية",cont:"آسيا",cap:"كاتماندو",f:"1768",col:"دولة مؤسسة"},
+    {n:"سريلانكا",c:"lk",pop:"21,919,000",area:"65,610",lang:"السنهالية، التاميلية",cont:"آسيا",cap:"سري جاياواردنيبورا",f:"1948",col:"المملكة المتحدة"},
+    {n:"إيران",c:"ir",pop:"87,923,432",area:"1,648,195",lang:"الفارسية",cont:"آسيا",cap:"طهران",f:"550 ق.م",col:"دولة مؤسسة"},
+    {n:"تركيا",c:"tr",pop:"85,816,199",area:"783,562",lang:"التركية",cont:"آسيا",cap:"أنقرة",f:"1923",col:"دولة مؤسسة (بعد سقوط العثمانيين)"},
+    {n:"أذربيجان",c:"az",pop:"10,143,541",area:"86,600",lang:"الأذربيجانية",cont:"آسيا",cap:"باكو",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"جورجيا",c:"ge",pop:"3,728,282",area:"69,700",lang:"الجورجية",cont:"آسيا",cap:"تبليسي",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"أرمينيا",c:"am",pop:"2,777,970",area:"29,743",lang:"الأرمنية",cont:"آسيا",cap:"يريفان",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"كازاخستان",c:"kz",pop:"19,397,998",area:"2,724,900",lang:"القازاقية، الروسية",cont:"آسيا",cap:"أستانا",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"أوزبكستان",c:"uz",pop:"34,915,100",area:"447,400",lang:"الأوزبكية",cont:"آسيا",cap:"طشقند",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"تركمانستان",c:"tm",pop:"6,431,000",area:"488,100",lang:"التركمانية",cont:"آسيا",cap:"عشق آباد",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"قيرغيزستان",c:"kg",pop:"6,728,000",area:"199,951",lang:"القيرغيزية، الروسية",cont:"آسيا",cap:"بيشكك",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"طاجيكستان",c:"tj",pop:"9,750,000",area:"143,100",lang:"الطاجيكية",cont:"آسيا",cap:"دوشنبه",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"بوتان",c:"bt",pop:"782,543",area:"38,394",lang:"الزونخا",cont:"آسيا",cap:"تيمفو",f:"1907",col:"دولة مؤسسة"},
+    {n:"بروناي",c:"bn",pop:"449,002",area:"5,765",lang:"الماليزية",cont:"آسيا",cap:"بندر سري بيجاوان",f:"1984",col:"المملكة المتحدة"},
+    {n:"تيمور الشرقية",c:"tl",pop:"1,340,596",area:"14,874",lang:"البرتغالية، التيتومية",cont:"آسيا",cap:"ديلي",f:"2002",col:"إندونيسيا / البرتغال"},
+    {n:"جزر المالديف",c:"mv",pop:"521,457",area:"298",lang:"الديفهية",cont:"آسيا",cap:"ماليه",f:"1965",col:"المملكة المتحدة"},
+
+    // ===== أفريقيا (غير عربية) =====
+    {n:"نيجيريا",c:"ng",pop:"218,541,212",area:"923,768",lang:"الإنجليزية",cont:"أفريقيا",cap:"أبوجا",f:"1960",col:"المملكة المتحدة"},
+    {n:"إثيوبيا",c:"et",pop:"123,379,924",area:"1,104,300",lang:"الأمهرية",cont:"أفريقيا",cap:"أديس أبابا",f:"قديمة جداً",col:"دولة مؤسسة (قاومت الاستعمار)"},
+    {n:"كينيا",c:"ke",pop:"54,027,487",area:"580,367",lang:"السواحيلية، الإنجليزية",cont:"أفريقيا",cap:"نيروبي",f:"1963",col:"المملكة المتحدة"},
+    {n:"جنوب أفريقيا",c:"za",pop:"60,414,495",area:"1,219,090",lang:"11 لغة رسمية",cont:"أفريقيا",cap:"بريتوريا",f:"1910 / 1994",col:"المملكة المتحدة / نظام الأبارتايد"},
+    {n:"تنزانيا",c:"tz",pop:"63,588,334",area:"945,087",lang:"السواحيلية، الإنجليزية",cont:"أفريقيا",cap:"دودوما",f:"1961",col:"المملكة المتحدة"},
+    {n:"غانا",c:"gh",pop:"32,833,031",area:"238,533",lang:"الإنجليزية",cont:"أفريقيا",cap:"أكرا",f:"1957",col:"المملكة المتحدة"},
+    {n:"السنغال",c:"sn",pop:"17,196,308",area:"196,722",lang:"الفرنسية",cont:"أفريقيا",cap:"داكار",f:"1960",col:"فرنسا"},
+    {n:"الكوت ديفوار",c:"ci",pop:"27,478,431",area:"322,463",lang:"الفرنسية",cont:"أفريقيا",cap:"ياموسوكرو",f:"1960",col:"فرنسا"},
+    {n:"الكاميرون",c:"cm",pop:"27,198,185",area:"475,442",lang:"الفرنسية، الإنجليزية",cont:"أفريقيا",cap:"ياوندي",f:"1960",col:"فرنسا"},
+    {n:"أوغندا",c:"ug",pop:"47,249,585",area:"241,038",lang:"الإنجليزية، السواحيلية",cont:"أفريقيا",cap:"كامبالا",f:"1962",col:"المملكة المتحدة"},
+    {n:"إريتريا",c:"er",pop:"3,684,032",area:"117,600",lang:"التغرينية، العربية، الإنجليزية",cont:"أفريقيا",cap:"أسمرة",f:"1993",col:"إيطاليا / إثيوبيا"},
+    {n:"رواندا",c:"rw",pop:"13,461,888",area:"26,338",lang:"الكينيارواندا، الفرنسية، الإنجليزية",cont:"أفريقيا",cap:"كيغالي",f:"1962",col:"بلجيكا"},
+    {n:"بوروندي",c:"bi",pop:"12,500,000",area:"27,830",lang:"الكيروندية، الفرنسية",cont:"أفريقيا",cap:"غيتيغا",f:"1962",col:"بلجيكا"},
+    {n:"موزمبيق",c:"mz",pop:"32,969,517",area:"801,590",lang:"البرتغالية",cont:"أفريقيا",cap:"مابوتو",f:"1975",col:"البرتغال"},
+    {n:"أنغولا",c:"ao",pop:"35,027,343",area:"1,246,700",lang:"البرتغالية",cont:"أفريقيا",cap:"لواندا",f:"1975",col:"البرتغال"},
+    {n:"زامبيا",c:"zm",pop:"19,473,125",area:"752,618",lang:"الإنجليزية",cont:"أفريقيا",cap:"لوساكا",f:"1964",col:"المملكة المتحدة"},
+    {n:"زيمبابوي",c:"zw",pop:"15,993,524",area:"390,757",lang:"الإنجليزية",cont:"أفريقيا",cap:"هراري",f:"1980",col:"المملكة المتحدة"},
+    {n:"مدغشقر",c:"mg",pop:"28,915,653",area:"587,041",lang:"الملغاشية، الفرنسية",cont:"أفريقيا",cap:"أنتاناناريفو",f:"1960",col:"فرنسا"},
+    {n:"مالي",c:"ml",pop:"21,904,983",area:"1,240,192",lang:"الفرنسية",cont:"أفريقيا",cap:"باماكو",f:"1960",col:"فرنسا"},
+    {n:"بوركينا فاسو",c:"bf",pop:"22,100,835",area:"274,200",lang:"الفرنسية",cont:"أفريقيا",cap:"واغادوغو",f:"1960",col:"فرنسا"},
+    {n:"النيجر",c:"ne",pop:"25,130,810",area:"1,267,000",lang:"الفرنسية",cont:"أفريقيا",cap:"نيامي",f:"1960",col:"فرنسا"},
+    {n:"تشاد",c:"td",pop:"17,179,740",area:"1,284,000",lang:"الفرنسية، العربية",cont:"أفريقيا",cap:"نجامينا",f:"1960",col:"فرنسا"},
+    {n:"جمهورية أفريقيا الوسطى",c:"cf",pop:"5,579,144",area:"622,984",lang:"الفرنسية، السانغو",cont:"أفريقيا",cap:"بانغي",f:"1960",col:"فرنسا"},
+    {n:"الكونغو",c:"cg",pop:"5,657,013",area:"342,000",lang:"الفرنسية",cont:"أفريقيا",cap:"برازافيل",f:"1960",col:"فرنسا"},
+    {n:"الكونغو الديمقراطية",c:"cd",pop:"99,010,212",area:"2,344,858",lang:"الفرنسية",cont:"أفريقيا",cap:"كنشاسا",f:"1960",col:"بلجيكا"},
+    {n:"الغابون",c:"ga",pop:"2,341,170",area:"267,668",lang:"الفرنسية",cont:"أفريقيا",cap:"ليبرفيل",f:"1960",col:"فرنسا"},
+    {n:"غينيا الاستوائية",c:"gq",pop:"1,674,908",area:"28,051",lang:"الإسبانية، الفرنسية، البرتغالية",cont:"أفريقيا",cap:"مالابو",f:"1968",col:"إسبانيا"},
+    {n:"توغو",c:"tg",pop:"8,644,829",area:"56,785",lang:"الفرنسية",cont:"أفريقيا",cap:"لومي",f:"1960",col:"فرنسا"},
+    {n:"بنين",c:"bj",pop:"13,352,864",area:"112,622",lang:"الفرنسية",cont:"أفريقيا",cap:"بورتو نوفو",f:"1960",col:"فرنسا"},
+    {n:"سيراليون",c:"sl",pop:"8,420,641",area:"71,740",lang:"الإنجليزية",cont:"أفريقيا",cap:"فريتاون",f:"1961",col:"المملكة المتحدة"},
+    {n:"ليبيريا",c:"lr",pop:"5,302,681",area:"111,369",lang:"الإنجليزية",cont:"أفريقيا",cap:"مونروفيا",f:"1847",col:"دولة مؤسسة (أمريكية)"},
+    {n:"غينيا",c:"gn",pop:"13,497,216",area:"245,857",lang:"الفرنسية",cont:"أفريقيا",cap:"كوناكري",f:"1958",col:"فرنسا"},
+    {n:"غينيا بيساو",c:"gw",pop:"2,060,721",area:"36,125",lang:"البرتغالية",cont:"أفريقيا",cap:"بيساو",f:"1973",col:"البرتغال"},
+    {n:"غامبيا",c:"gm",pop:"2,639,916",area:"11,295",lang:"الإنجليزية",cont:"أفريقيا",cap:"بانجول",f:"1965",col:"المملكة المتحدة"},
+    {n:"الرأس الأخضر",c:"cv",pop:"587,925",area:"4,033",lang:"البرتغالية",cont:"أفريقيا",cap:"برايا",f:"1975",col:"البرتغال"},
+    {n:"ساو تومي وبرينسيبي",c:"st",pop:"223,364",area:"964",lang:"البرتغالية",cont:"أفريقيا",cap:"ساو تومي",f:"1975",col:"البرتغال"},
+    {n:"موريشيوس",c:"mu",pop:"1,262,605",area:"2,040",lang:"الإنجليزية",cont:"أفريقيا",cap:"بورت لويس",f:"1968",col:"المملكة المتحدة"},
+    {n:"سيشل",c:"sc",pop:"98,347",area:"459",lang:"السيشيلية، الإنجليزية، الفرنسية",cont:"أفريقيا",cap:"فيكتوريا",f:"1976",col:"المملكة المتحدة"},
+    {n:"ناميبيا",c:"na",pop:"2,567,012",area:"824,292",lang:"الإنجليزية",cont:"أفريقيا",cap:"ويندهوك",f:"1990",col:"جنوب أفريقيا"},
+    {n:"بوتسوانا",c:"bw",pop:"2,588,423",area:"581,730",lang:"الإنجليزية",cont:"أفريقيا",cap:"جابورون",f:"1966",col:"المملكة المتحدة"},
+    {n:"ليسوتو",c:"ls",pop:"2,305,825",area:"30,355",lang:"السيوتو، الإنجليزية",cont:"أفريقيا",cap:"ماسيرو",f:"1966",col:"المملكة المتحدة"},
+    {n:"إسواتيني",c:"sz",pop:"1,201,670",area:"17,364",lang:"السيواتي، الإنجليزية",cont:"أفريقيا",cap:"مبابان",f:"1968",col:"المملكة المتحدة"},
+    {n:"ملاوي",c:"mw",pop:"19,889,742",area:"118,484",lang:"الإنجليزية",cont:"أفريقيا",cap:"ليلونغوي",f:"1964",col:"المملكة المتحدة"},
+    {n:"جنوب السودان",c:"ss",pop:"11,088,796",area:"644,329",lang:"الإنجليزية",cont:"أفريقيا",cap:"جوبا",f:"2011",col:"السودان"},
+
+    // ===== أوروبا =====
+    {n:"ألمانيا",c:"de",pop:"83,294,633",area:"357,022",lang:"الألمانية",cont:"أوروبا",cap:"برلين",f:"1871 / 1990",col:"دولة مؤسسة"},
+    {n:"فرنسا",c:"fr",pop:"64,756,584",area:"643,801",lang:"الفرنسية",cont:"أوروبا",cap:"باريس",f:"843",col:"دولة مؤسسة"},
+    {n:"المملكة المتحدة",c:"gb",pop:"67,736,802",area:"243,610",lang:"الإنجليزية",cont:"أوروبا",cap:"لندن",f:"1707",col:"دولة مؤسسة"},
+    {n:"إيطاليا",c:"it",pop:"58,870,762",area:"301,340",lang:"الإيطالية",cont:"أوروبا",cap:"روما",f:"1861",col:"دولة مؤسسة"},
+    {n:"إسبانيا",c:"es",pop:"47,519,628",area:"505,992",lang:"الإسبانية",cont:"أوروبا",cap:"مدريد",f:"1479",col:"دولة مؤسسة"},
+    {n:"البرتغال",c:"pt",pop:"10,247,605",area:"92,212",lang:"البرتغالية",cont:"أوروبا",cap:"لشبونة",f:"1143",col:"دولة مؤسسة"},
+    {n:"هولندا",c:"nl",pop:"17,533,405",area:"41,543",lang:"الهولندية",cont:"أوروبا",cap:"أمستردام",f:"1581",col:"دولة مؤسسة"},
+    {n:"بلجيكا",c:"be",pop:"11,584,008",area:"30,528",lang:"الهولندية، الفرنسية، الألمانية",cont:"أوروبا",cap:"بروكسل",f:"1830",col:"دولة مؤسسة"},
+    {n:"سويسرا",c:"ch",pop:"8,775,760",area:"41,285",lang:"الألمانية، الفرنسية، الإيطالية، الرومانشية",cont:"أوروبا",cap:"برن",f:"1291",col:"دولة مؤسسة"},
+    {n:"النمسا",c:"at",pop:"9,006,398",area:"83,871",lang:"الألمانية",cont:"أوروبا",cap:"فيينا",f:"1955",col:"دولة مؤسسة (بعد الاحتلال النازي)"},
+    {n:"السويد",c:"se",pop:"10,549,347",area:"450,295",lang:"السويدية",cont:"أوروبا",cap:"ستوكهولم",f:"1523",col:"دولة مؤسسة"},
+    {n:"النرويج",c:"no",pop:"5,474,360",area:"385,207",lang:"النرويجية",cont:"أوروبا",cap:"أوسلو",f:"1905",col:"السويد"},
+    {n:"الدنمارك",c:"dk",pop:"5,856,198",area:"43,094",lang:"الدنماركية",cont:"أوروبا",cap:"كوبنهاغن",f:"965",col:"دولة مؤسسة"},
+    {n:"فنلندا",c:"fi",pop:"5,545,475",area:"338,145",lang:"الفنلندية، السويدية",cont:"أوروبا",cap:"هلسنكي",f:"1917",col:"روسيا"},
+    {n:"آيسلندا",c:"is",pop:"375,318",area:"103,000",lang:"الأيسلندية",cont:"أوروبا",cap:"ريكيافيك",f:"1944",col:"الدنمارك"},
+    {n:"أيرلندا",c:"ie",pop:"5,056,935",area:"70,273",lang:"الأيرلندية، الإنجليزية",cont:"أوروبا",cap:"دبلن",f:"1922",col:"المملكة المتحدة"},
+    {n:"بولندا",c:"pl",pop:"36,753,736",area:"312,679",lang:"البولندية",cont:"أوروبا",cap:"وارسو",f:"1918 / 1989",col:"روسيا / ألمانيا / النمسا"},
+    {n:"التشيك",c:"cz",pop:"10,495,295",area:"78,867",lang:"التشيكية",cont:"أوروبا",cap:"براغ",f:"1993",col:"النمسا-المجر"},
+    {n:"سلوفاكيا",c:"sk",pop:"5,431,194",area:"49,035",lang:"السلوفاكية",cont:"أوروبا",cap:"براتيسلافا",f:"1993",col:"النمسا-المجر"},
+    {n:"المجر",c:"hu",pop:"9,597,085",area:"93,028",lang:"الهنغارية",cont:"أوروبا",cap:"بودابست",f:"1000 / 1989",col:"النمسا-المجر / الاتحاد السوفيتي"},
+    {n:"رومانيا",c:"ro",pop:"19,045,495",area:"238,391",lang:"الرومانية",cont:"أوروبا",cap:"بوخارست",f:"1859 / 1989",col:"الدولة العثمانية / الاتحاد السوفيتي"},
+    {n:"بلغاريا",c:"bg",pop:"6,687,717",area:"110,879",lang:"البلغارية",cont:"أوروبا",cap:"صوفيا",f:"681 / 1908",col:"الدولة العثمانية"},
+    {n:"اليونان",c:"gr",pop:"10,341,277",area:"131,957",lang:"اليونانية",cont:"أوروبا",cap:"أثينا",f:"1821",col:"الدولة العثمانية"},
+    {n:"روسيا",c:"ru",pop:"144,236,933",area:"17,098,242",lang:"الروسية",cont:"أوروبا",cap:"موسكو",f:"1991",col:"دولة مؤسسة (بعد الاتحاد السوفيتي)"},
+    {n:"أوكرانيا",c:"ua",pop:"36,744,636",area:"603,550",lang:"الأوكرانية",cont:"أوروبا",cap:"كييف",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"بيلاروسيا",c:"by",pop:"9,498,238",area:"207,600",lang:"البيلاروسية، الروسية",cont:"أوروبا",cap:"مينسك",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"مولدوفا",c:"md",pop:"2,512,758",area:"33,846",lang:"الرومانية",cont:"أوروبا",cap:"كيشيناو",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"ليتوانيا",c:"lt",pop:"2,718,357",area:"65,300",lang:"الليتوانية",cont:"أوروبا",cap:"فيلنيوس",f:"1990",col:"الاتحاد السوفيتي"},
+    {n:"لاتفيا",c:"lv",pop:"1,830,211",area:"64,589",lang:"اللاتفية",cont:"أوروبا",cap:"ريغا",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"إستونيا",c:"ee",pop:"1,322,765",area:"45,227",lang:"الإستونية",cont:"أوروبا",cap:"تالين",f:"1991",col:"الاتحاد السوفيتي"},
+    {n:"صربيا",c:"rs",pop:"6,647,003",area:"88,361",lang:"الصربية",cont:"أوروبا",cap:"بلغراد",f:"2006",col:"الدولة العثمانية"},
+    {n:"كرواتيا",c:"hr",pop:"3,855,641",area:"56,594",lang:"الكرواتية",cont:"أوروبا",cap:"زغرب",f:"1991",col:"يوغوسلافيا"},
+    {n:"البوسنة والهرسك",c:"ba",pop:"3,210,847",area:"51,197",lang:"البوسنية، الكرواتية، الصربية",cont:"أوروبا",cap:"سراييفو",f:"1992",col:"يوغوسلافيا"},
+    {n:"سلوفينيا",c:"si",pop:"2,108,977",area:"20,273",lang:"السلوفينية",cont:"أوروبا",cap:"ليوبليانا",f:"1991",col:"يوغوسلافيا"},
+    {n:"مقدونيا الشمالية",c:"mk",pop:"2,085,678",area:"25,713",lang:"المقدونية",cont:"أوروبا",cap:"سكوبيه",f:"1991",col:"يوغوسلافيا"},
+    {n:"ألبانيا",c:"al",pop:"2,837,743",area:"28,748",lang:"الألبانية",cont:"أوروبا",cap:"تيرانا",f:"1912",col:"الدولة العثمانية"},
+    {n:"الجبل الأسود",c:"me",pop:"626,485",area:"13,812",lang:"المونتينيغرية",cont:"أوروبا",cap:"بودغوريتسا",f:"2006",col:"يوغوسلافيا"},
+    {n:"كوسوفو",c:"xk",pop:"1,795,666",area:"10,887",lang:"الألبانية، الصربية",cont:"أوروبا",cap:"بريشتينا",f:"2008",col:"صربيا"},
+    {n:"قبرص",c:"cy",pop:"1,244,188",area:"9,251",lang:"اليونانية، التركية",cont:"أوروبا",cap:"nicosia",f:"1960",col:"المملكة المتحدة"},
+    {n:"مالطا",c:"mt",pop:"514,564",area:"316",lang:"المالطية، الإنجليزية",cont:"أوروبا",cap:"فاليتا",f:"1964",col:"المملكة المتحدة"},
+    {n:"لوكسمبورغ",c:"lu",pop:"654,768",area:"2,586",lang:"الفرنسية، الألمانية، اللوكسمبورغية",cont:"أوروبا",cap:"لوكسمبورغ",f:"1839",col:"دولة مؤسسة"},
+    {n:"ليختنشتاين",c:"li",pop:"38,970",area:"160",lang:"الألمانية",cont:"أوروبا",cap:"فادوتس",f:"1719",col:"دولة مؤسسة"},
+    {n:"موناكو",c:"mc",pop:"36,297",area:"2",lang:"الفرنسية",cont:"أوروبا",cap:"موناكو",f:"1297",col:"دولة مؤسسة"},
+    {n:"أندورا",c:"ad",pop:"79,824",area:"468",lang:"الكتالونية",cont:"أوروبا",cap:"أندورا لا فيلا",f:"1278",col:"دولة مؤسسة"},
+    {n:"سان مارينو",c:"sm",pop:"33,642",area:"61",lang:"الإيطالية",cont:"أوروبا",cap:"سان مارينو",f:"301",col:"دولة مؤسسة"},
+    {n:"الفاتيكان",c:"va",pop:"510",area:"0.44",lang:"اللاتينية، الإيطالية",cont:"أوروبا",cap:"الفاتيكان",f:"1929",col:"دولة مؤسسة"},
+
+    // ===== أمريكا الشمالية =====
+    {n:"الولايات المتحدة",c:"us",pop:"334,914,895",area:"9,833,517",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"واشنطن",f:"1776",col:"المملكة المتحدة"},
+    {n:"كندا",c:"ca",pop:"38,781,291",area:"9,984,670",lang:"الإنجليزية، الفرنسية",cont:"أمريكا الشمالية",cap:"أوتاوا",f:"1867",col:"المملكة المتحدة"},
+    {n:"المكسيك",c:"mx",pop:"128,455,567",area:"1,964,375",lang:"الإسبانية",cont:"أمريكا الشمالية",cap:"مكسيكو سيتي",f:"1821",col:"إسبانيا"},
+    {n:"غواتيمالا",c:"gt",pop:"17,602,431",area:"108,889",lang:"الإسبانية",cont:"أمريكا الشمالية",cap:"غواتيمالا",f:"1821",col:"إسبانيا"},
+    {n:"بليز",c:"bz",pop:"410,825",area:"22,966",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"بلموبان",f:"1981",col:"المملكة المتحدة"},
+    {n:"السلفادور",c:"sv",pop:"6,314,167",area:"21,041",lang:"الإسبانية",cont:"أمريكا الشمالية",cap:"سان سلفادور",f:"1821",col:"إسبانيا"},
+    {n:"هندوراس",c:"hn",pop:"10,278,345",area:"112,492",lang:"الإسبانية",cont:"أمريكا الشمالية",cap:"تيغوسيغالبا",f:"1821",col:"إسبانيا"},
+    {n:"نيكاراغوا",c:"ni",pop:"6,850,540",area:"130,373",lang:"الإسبانية",cont:"أمريكا الشمالية",cap:"ماناغوا",f:"1821",col:"إسبانيا"},
+    {n:"كوستاريكا",c:"cr",pop:"5,154,108",area:"51,100",lang:"الإسبانية",cont:"أمريكا الشمالية",cap:"سان خوسيه",f:"1821",col:"إسبانيا"},
+    {n:"بنما",c:"pa",pop:"4,351,267",area:"75,420",lang:"الإسبانية",cont:"أمريكا الشمالية",cap:"بنما",f:"1903",col:"كولومبيا / الولايات المتحدة"},
+    {n:"كوبا",c:"cu",pop:"11,212,191",area:"109,884",lang:"الإسبانية",cont:"أمريكا الشمالية",cap:"هافانا",f:"1902",col:"إسبانيا"},
+    {n:"هايتي",c:"ht",pop:"11,584,996",area:"27,750",lang:"الفرنسية، الكريولية",cont:"أمريكا الشمالية",cap:"بورت أو برانس",f:"1804",col:"فرنسا"},
+    {n:"جمهورية الدومينيكان",c:"do",pop:"10,953,714",area:"48,671",lang:"الإسبانية",cont:"أمريكا الشمالية",cap:"سانتو دومينغو",f:"1844",col:"إسبانيا"},
+    {n:"جامايكا",c:"jm",pop:"2,812,090",area:"10,991",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"كينغستون",f:"1962",col:"المملكة المتحدة"},
+    {n:"ترينيداد وتوباغو",c:"tt",pop:"1,525,663",area:"5,130",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"بورت أوف سبين",f:"1962",col:"المملكة المتحدة"},
+    {n:"باربادوس",c:"bb",pop:"281,200",area:"430",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"بريدج تاون",f:"1966",col:"المملكة المتحدة"},
+    {n:"البهاما",c:"bs",pop:"407,906",area:"13,880",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"ناسو",f:"1973",col:"المملكة المتحدة"},
+    {n:"غرينادا",c:"gd",pop:"124,610",area:"344",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"سانت جورجز",f:"1974",col:"المملكة المتحدة"},
+    {n:"سانت لوسيا",c:"lc",pop:"179,651",area:"616",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"كاستريس",f:"1979",col:"المملكة المتحدة"},
+    {n:"دومينيكا",c:"dm",pop:"72,167",area:"751",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"روزيو",f:"1978",col:"المملكة المتحدة"},
+    {n:"سانت كيتس ونيفيس",c:"kn",pop:"53,192",area:"261",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"باسيتير",f:"1983",col:"المملكة المتحدة"},
+    {n:"أنتيغوا وبربودا",c:"ag",pop:"100,772",area:"442",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"سانت جونز",f:"1981",col:"المملكة المتحدة"},
+    {n:"سانت فنسنت والغرينادين",c:"vc",pop:"104,332",area:"389",lang:"الإنجليزية",cont:"أمريكا الشمالية",cap:"كينغستاون",f:"1979",col:"المملكة المتحدة"},
+
+    // ===== أمريكا الجنوبية =====
+    {n:"البرازيل",c:"br",pop:"215,313,498",area:"8,515,767",lang:"البرتغالية",cont:"أمريكا الجنوبية",cap:"برازيليا",f:"1822",col:"البرتغال"},
+    {n:"الأرجنتين",c:"ar",pop:"45,510,318",area:"2,780,400",lang:"الإسبانية",cont:"أمريكا الجنوبية",cap:"بوينس آيرس",f:"1816",col:"إسبانيا"},
+    {n:"كولومبيا",c:"co",pop:"51,874,024",area:"1,141,748",lang:"الإسبانية",cont:"أمريكا الجنوبية",cap:"بوغوتا",f:"1810",col:"إسبانيا"},
+    {n:"بيرو",c:"pe",pop:"33,715,471",area:"1,285,216",lang:"الإسبانية",cont:"أمريكا الجنوبية",cap:"ليما",f:"1821",col:"إسبانيا"},
+    {n:"فنزويلا",c:"ve",pop:"28,435,943",area:"916,445",lang:"الإسبانية",cont:"أمريكا الجنوبية",cap:"كاراكاس",f:"1811",col:"إسبانيا"},
+    {n:"تشيلي",c:"cl",pop:"19,493,184",area:"756,102",lang:"الإسبانية",cont:"أمريكا الجنوبية",cap:"سانتياغو",f:"1818",col:"إسبانيا"},
+    {n:"الإكوادور",c:"ec",pop:"18,001,000",area:"283,561",lang:"الإسبانية",cont:"أمريكا الجنوبية",cap:"كيتو",f:"1822",col:"إسبانيا"},
+    {n:"بوليفيا",c:"bo",pop:"12,054,379",area:"1,098,581",lang:"الإسبانية",cont:"أمريكا الجنوبية",cap:"سوكري",f:"1825",col:"إسبانيا"},
+    {n:"باراغواي",c:"py",pop:"7,132,538",area:"406,752",lang:"الإسبانية، الغوارانية",cont:"أمريكا الجنوبية",cap:"أسونسيون",f:"1811",col:"إسبانيا"},
+    {n:"الأوروغواي",c:"uy",pop:"3,426,260",area:"176,215",lang:"الإسبانية",cont:"أمريكا الجنوبية",cap:"مونتيفيديو",f:"1828",col:"إسبانيا / البرازيل"},
+    {n:"غيانا",c:"gy",pop:"804,596",area:"214,969",lang:"الإنجليزية",cont:"أمريكا الجنوبية",cap:"جورج تاون",f:"1966",col:"المملكة المتحدة"},
+    {n:"سورينام",c:"sr",pop:"612,985",area:"163,820",lang:"الهولندية",cont:"أمريكا الجنوبية",cap:"باراماريبو",f:"1975",col:"هولندا"},
+
+    // ===== أوقيانوسيا =====
+    {n:"أستراليا",c:"au",pop:"26,141,369",area:"7,692,024",lang:"الإنجليزية",cont:"أوقيانوسيا",cap:"كانبرا",f:"1901",col:"المملكة المتحدة"},
+    {n:"نيوزيلندا",c:"nz",pop:"5,124,100",area:"268,838",lang:"الإنجليزية، الماورية",cont:"أوقيانوسيا",cap:"ويلينغتون",f:"1907",col:"المملكة المتحدة"},
+    {n:"بابوا غينيا الجديدة",c:"pg",pop:"9,948,179",area:"462,840",lang:"الإنجليزية",cont:"أوقيانوسيا",cap:"بورت مورسبي",f:"1975",col:"أستراليا"},
+    {n:"فيجي",c:"fj",pop:"929,766",area:"18,274",lang:"الإنجليزية",cont:"أوقيانوسيا",cap:"سوفا",f:"1970",col:"المملكة المتحدة"},
+    {n:"جزر سليمان",c:"sb",pop:"703,995",area:"28,896",lang:"الإنجليزية",cont:"أوقيانوسيا",cap:"هونيارا",f:"1978",col:"المملكة المتحدة"},
+    {n:"فانواتو",c:"vu",pop:"319,137",area:"12,189",lang:"الإنجليزية، الفرنسية",cont:"أوقيانوسيا",cap:"بورت فيلا",f:"1980",col:"المملكة المتحدة / فرنسا"},
+    {n:"ساموا",c:"ws",pop:"218,764",area:"2,831",lang:"الساموائية، الإنجليزية",cont:"أوقيانوسيا",cap:"أبيا",f:"1962",col:"نيوزيلندا"},
+    {n:"كيريباتي",c:"ki",pop:"131,232",area:"811",lang:"الإنجليزية",cont:"أوقيانوسيا",cap:"تاراوا",f:"1979",col:"المملكة المتحدة"},
+    {n:"تونغا",c:"to",pop:"106,095",area:"747",lang:"التونغية، الإنجليزية",cont:"أوقيانوسيا",cap:"نوكو ألوفا",f:"1970",col:"المملكة المتحدة"},
+    {n:"ميكرونيزيا",c:"fm",pop:"115,224",area:"702",lang:"الإنجليزية",cont:"أوقيانوسيا",cap:"باليكير",f:"1986",col:"الولايات المتحدة"},
+    {n:"بالاو",c:"pw",pop:"18,058",area:"459",lang:"البالاوية، الإنجليزية",cont:"أوقيانوسيا",cap:"نغيرولمود",f:"1994",col:"الولايات المتحدة"},
+    {n:"جزر مارشال",c:"mh",pop:"42,050",area:"181",lang:"المارشالية، الإنجليزية",cont:"أوقيانوسيا",cap:"ماجورو",f:"1986",col:"الولايات المتحدة"},
+    {n:"ناورو",c:"nr",pop:"12,511",area:"21",lang:"الناوروانة، الإنجليزية",cont:"أوقيانوسيا",cap:"يارين",f:"1968",col:"أستراليا / المملكة المتحدة"},
+    {n:"توفالو",c:"tv",pop:"11,204",area:"26",lang:"التوفالوية، الإنجليزية",cont:"أوقيانوسيا",cap:"فونافوتي",f:"1978",col:"المملكة المتحدة"}
+];
+
+let filteredCountries = [...countriesData];
+let currentFilter = 'all';
+
+function updateStats() {
+    document.getElementById('stats').innerHTML = 
+        `📊 عدد الدول المعروضة: <strong>${filteredCountries.length}</strong> من أصل <strong>${countriesData.length}</strong> | 🌙 الدول العربية: <strong>${countriesData.filter(c=>c.arab).length}</strong>`;
+}
+
+function renderCountries() {
+    const grid = document.getElementById('countriesGrid');
+    grid.innerHTML = '';
+    
+    if (filteredCountries.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:50px;color:#ffd700;">🔍 لا توجد نتائج مطابقة</div>';
+        return;
+    }
+
+    filteredCountries.forEach(country => {
+        const card = document.createElement('div');
+        card.className = 'country-card' + (country.arab ? ' arab' : '');
+        card.innerHTML = `
+            <div class="flag-container">
+                <img src="https://flagcdn.com/w640/${country.c}.png" 
+                     alt="${country.n}" 
+                     class="flag-img" 
+                     loading="lazy"
+                     onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\\'font-size:80px;\\'>🏳️</div>'">
+            </div>
+            <div class="country-info">
+                <div class="country-name">${country.n}</div>
+                <div class="info-row independence">
+                    <span class="info-label">📅 تاريخ الاستقلال:</span>
+                    <span class="info-value">${country.f}<span class="colonizer">⚔️ من: ${country.col}</span></span>
+                </div>
+                <div class="info-row"><span class="info-label">👥 السكان:</span><span class="info-value">${country.pop}</span></div>
+                <div class="info-row"><span class="info-label">📏 المساحة:</span><span class="info-value">${country.area} كم²</span></div>
+                <div class="info-row"><span class="info-label">🗣️ اللغة:</span><span class="info-value">${country.lang}</span></div>
+                <div class="info-row"><span class="info-label">🌍 القارة:</span><span class="info-value">${country.cont}</span></div>
+                <div class="info-row"><span class="info-label">🏛️ العاصمة:</span><span class="info-value">${country.cap}</span></div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+function filterCountries() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    filteredCountries = countriesData.filter(country => {
+        const matchesSearch = !searchTerm || 
+            country.n.toLowerCase().includes(searchTerm) || 
+            country.cap.toLowerCase().includes(searchTerm);
+        let matchesFilter = true;
+        if (currentFilter === 'all') matchesFilter = true;
+        else if (currentFilter === 'arab') matchesFilter = country.arab === true;
+        else matchesFilter = country.cont === currentFilter;
+        return matchesSearch && matchesFilter;
+    });
+    updateStats();
+    renderCountries();
+}
+
+document.getElementById('searchInput').addEventListener('input', filterCountries);
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.filter;
+        filterCountries();
+    });
+});
+
+updateStats();
+renderCountries();
+</script>
+
+</body>
+</html>
