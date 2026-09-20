@@ -280,7 +280,6 @@ body {
     font-size: 1.2em;
 }
 
-/* ===== زر الرجوع للأعلى ===== */
 .back-to-top {
     position: fixed;
     bottom: 30px;
@@ -314,10 +313,6 @@ body {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     transform: translateY(-5px) scale(1.1);
     box-shadow: 0 12px 30px rgba(240,147,251,0.6);
-}
-
-.back-to-top:active {
-    transform: translateY(-2px) scale(1.05);
 }
 
 .back-to-top::after {
@@ -358,7 +353,7 @@ body {
         <div class="logo-icon">F</div>
         <div class="logo-text">FATYAK</div>
     </div>
-    <h1>🌍 موسوعة أعلام دول العالم</h1>
+    <h1> موسوعة أعلام دول العالم</h1>
     <p>معلومات شاملة عن جميع دول العالم - أعلامها، استقلالها، سكانها ومساحاتها</p>
     <div class="developer">⚡ تطوير: FATYAK ⚡</div>
 </div>
@@ -384,10 +379,9 @@ body {
 <div class="countries-grid" id="countriesGrid"></div>
 
 <div class="footer">
-    <p>تم التطوير بواسطة <strong>FATYAK</strong> ⚡</p>
+    <p>تم التطوير بواسطة <strong>FATYAK</strong> </p>
 </div>
 
-<!-- زر الرجوع للأعلى -->
 <button class="back-to-top" id="backToTop" title="الرجوع إلى الأعلى">⬆</button>
 
 <script>
@@ -403,15 +397,12 @@ window.addEventListener('scroll', () => {
 });
 
 backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// ===== بيانات الدول =====
+// ===== بيانات الدول الكاملة (195+ دولة) =====
 const countriesData = [
-    // ===== الدول العربية =====
+    // ===== الدول العربية (22 دولة) =====
     {n:"المملكة العربية السعودية",c:"sa",pop:"36,408,726",area:"2,149,690",lang:"العربية",cont:"آسيا",cap:"الرياض",f:"1932",col:"دولة مؤسسة (لم تُستعمر)",arab:true},
     {n:"الإمارات العربية المتحدة",c:"ae",pop:"9,441,129",area:"83,600",lang:"العربية",cont:"آسيا",cap:"أبوظبي",f:"1971",col:"المملكة المتحدة",arab:true},
     {n:"دولة الكويت",c:"kw",pop:"4,268,873",area:"17,818",lang:"العربية",cont:"آسيا",cap:"الكويت",f:"1961",col:"المملكة المتحدة",arab:true},
@@ -625,8 +616,9 @@ let filteredCountries = [...countriesData];
 let currentFilter = 'all';
 
 function updateStats() {
+    const arabCount = countriesData.filter(c => c.arab).length;
     document.getElementById('stats').innerHTML = 
-        `📊 عدد الدول المعروضة: <strong>${filteredCountries.length}</strong> من أصل <strong>${countriesData.length}</strong> | 🌙 الدول العربية: <strong>${countriesData.filter(c=>c.arab).length}</strong>`;
+        `📊 عدد الدول المعروضة: <strong>${filteredCountries.length}</strong> من أصل <strong>${countriesData.length}</strong> | 🌙 الدول العربية: <strong>${arabCount}</strong>`;
 }
 
 function renderCountries() {
@@ -634,14 +626,15 @@ function renderCountries() {
     grid.innerHTML = '';
     
     if (filteredCountries.length === 0) {
-        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:50px;color:#ffd700;">🔍 لا توجد نتائج مطابقة</div>';
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:50px;color:#ffd700;font-size:1.3em;"> لا توجد نتائج مطابقة</div>';
         return;
     }
 
     filteredCountries.forEach(country => {
         const card = document.createElement('div');
         card.className = 'country-card' + (country.arab ? ' arab' : '');
-        card.innerHTML = `
+        
+        const flagHTML = `
             <div class="flag-container">
                 <img src="https://flagcdn.com/w640/${country.c}.png" 
                      alt="${country.n}" 
@@ -649,11 +642,14 @@ function renderCountries() {
                      loading="lazy"
                      onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\\'font-size:80px;\\'>🏳️</div>'">
             </div>
+        `;
+        
+        const infoHTML = `
             <div class="country-info">
                 <div class="country-name">${country.n}</div>
                 <div class="info-row independence">
                     <span class="info-label">📅 تاريخ الاستقلال:</span>
-                    <span class="info-value">${country.f}<span class="colonizer">⚔️ من: ${country.col}</span></span>
+                    <span class="info-value">${country.f}<span class="colonizer">️ من: ${country.col}</span></span>
                 </div>
                 <div class="info-row"><span class="info-label">👥 السكان:</span><span class="info-value">${country.pop}</span></div>
                 <div class="info-row"><span class="info-label">📏 المساحة:</span><span class="info-value">${country.area} كم²</span></div>
@@ -662,6 +658,8 @@ function renderCountries() {
                 <div class="info-row"><span class="info-label">🏛️ العاصمة:</span><span class="info-value">${country.cap}</span></div>
             </div>
         `;
+        
+        card.innerHTML = flagHTML + infoHTML;
         grid.appendChild(card);
     });
 }
@@ -693,8 +691,11 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     });
 });
 
+// تهيئة العرض عند تحميل الصفحة
 updateStats();
 renderCountries();
+
+console.log('✅ تم تحميل ' + countriesData.length + ' دولة بنجاح');
 </script>
 
 </body>
